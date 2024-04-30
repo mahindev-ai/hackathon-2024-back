@@ -23,7 +23,7 @@ class UserList(Resource):
         new_user = create_user(api.payload)
         return new_user, 201
 
-@api.route('/<int:id>')
+@api.route('/<string:id>')
 @api.param('id', 'The user identifier')
 @api.response(404, 'User not found')
 class User(Resource):
