@@ -1,4 +1,4 @@
-from app.models import sale_model
+from app.models.sale import sale_model
 from flask_restx import Namespace, Resource
 from app.services.user_service import get_all_users, get_user, create_user, update_user, delete_user
 
