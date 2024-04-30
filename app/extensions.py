@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate('firebase-credentials.json')
+cred = credentials.Certificate('/etc/secrets/firebase-credentials.json')
 
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
