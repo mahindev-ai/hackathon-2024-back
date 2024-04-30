@@ -8,8 +8,6 @@ def get_all_users():
     else:
         return []
 
-
-
 def get_user(user_id):
     # Ejemplo: Obtener un usuario de la base de datos
     user = db.child("users").child(user_id).get()
