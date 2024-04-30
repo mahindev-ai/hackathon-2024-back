@@ -2,7 +2,7 @@ from app.models.material import material_model
 from flask_restx import Namespace, Resource
 from app.services.material_service import get_all_materials, get_material, create_material, update_material, delete_material
 
-api = Namespace('Materials', description='Materials related operations')
+api = Namespace('Materials', description='Mgitaterials related operations')
 
 material = api.model('Materials', material_model)
 
