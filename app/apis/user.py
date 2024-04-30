@@ -1,6 +1,7 @@
+from flask import request
 from app.models.user import user_model
 from flask_restx import Namespace, Resource
-from app.services.user_service import get_all_users, get_user, create_user, update_user, delete_user
+from app.services.user_service import get_all_users, get_user, create_user, update_user, delete_user, login_user
 
 api = Namespace('Users', description='Users related operations')
 
@@ -54,3 +55,20 @@ class User(Resource):
         '''Delete a user given its identifier'''
         delete_user(id)
         return '', 204
+
+@api.route('/login')
+
+@api.response(404, 'User not found')    
+class UserLogin(Resource):
+    @api.doc('login')
+    @api.expect(user)
+    @api.marshal_with(user)
+    def post(self, email, password):
+        email = request.get_json()["email"]
+        password = request.get_json()["password"]
+        '''Login user with email and password'''
+        user = login_user(email, password)
+        if user:
+            return user
+        else:
+            api.abort(401, "Incorrect password")

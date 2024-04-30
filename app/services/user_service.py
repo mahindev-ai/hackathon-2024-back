@@ -11,7 +11,13 @@ def get_user(user_id):
     # Ejemplo: Obtener un usuario de la base de datos
     user = db.reference("users").child(user_id).get()
     return user.val()
-
+def login_user( username, password):
+    # Ejemplo: Obtener un usuario de la base de datos
+    user = db.reference("users").child(username).get()
+    if password == user["password"]:
+        user
+    else:
+        return []
 def create_user(user_data):
     new_user = {
         "id": user_data["id"],
@@ -41,4 +47,4 @@ def update_user(user_id, updated_data):
 
 def delete_user(user_id):
     # Ejemplo: Eliminar un usuario de la base de datos
-    db.reference("users").child(user_id).remove()
+    db.reference("users").child(user_id).delete()
