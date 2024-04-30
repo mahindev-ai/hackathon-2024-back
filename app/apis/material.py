@@ -1,56 +1,56 @@
 from app.models.material import material_model
 from flask_restx import Namespace, Resource
-from app.services.user_service import get_all_users, get_user, create_user, update_user, delete_user
+from app.services.material_service import get_all_materials, get_material, create_material, update_material, delete_material
 
-api = Namespace('Materials', description='Users related operations')
+api = Namespace('Materials', description='Materials related operations')
 
-user = api.model('Materials', material_model)
+material = api.model('Materials', material_model)
 
 @api.route('/')
-class UserList(Resource):
-    @api.doc('list_users')
-    @api.marshal_list_with(user)
+class materialList(Resource):
+    @api.doc('list_materials')
+    @api.marshal_list_with(material)
     def get(self):
-        '''List all users'''
-        users = get_all_users()
-        return users
+        '''List all materials'''
+        materials = get_all_materials()
+        return materials
 
-    @api.doc('create_user')
-    @api.expect(user)
-    @api.marshal_with(user, code=201)
+    @api.doc('create_material')
+    @api.expect(material)
+    @api.marshal_with(material, code=201)
     def post(self):
-        '''Create a new user'''
-        new_user = create_user(api.payload)
-        return new_user, 201
+        '''Create a new material'''
+        new_material = create_material(api.payload)
+        return new_material, 201
 
 @api.route('/<int:id>')
-@api.param('id', 'The user identifier')
-@api.response(404, 'User not found')
-class User(Resource):
-    @api.doc('get_user')
-    @api.marshal_with(user)
+@api.param('id', 'The material identifier')
+@api.response(404, 'material not found')
+class Material(Resource):
+    @api.doc('get_material')
+    @api.marshal_with(material)
     def get(self, id):
-        '''Fetch a user given its identifier'''
-        user = get_user(id)
-        if user:
-            return user
+        '''Fetch a material given its identifier'''
+        material = get_material(id)
+        if material:
+            return material
         else:
-            api.abort(404, "User not found")
+            api.abort(404, "material not found")
 
-    @api.doc('update_user')
-    @api.expect(user)
-    @api.marshal_with(user)
+    @api.doc('update_material')
+    @api.expect(material)
+    @api.marshal_with(material)
     def put(self, id):
-        '''Update a user given its identifier'''
-        updated_user = update_user(id, api.payload)
-        if updated_user:
-            return updated_user
+        '''Update a material given its identifier'''
+        updated_material = update_material(id, api.payload)
+        if updated_material:
+            return updated_material
         else:
-            api.abort(404, "User not found")
+            api.abort(404, "material not found")
 
-    @api.doc('delete_user')
-    @api.response(204, 'User deleted')
+    @api.doc('delete_material')
+    @api.response(204, 'material deleted')
     def delete(self, id):
-        '''Delete a user given its identifier'''
-        delete_user(id)
+        '''Delete a material given its identifier'''
+        delete_material(id)
         return '', 204

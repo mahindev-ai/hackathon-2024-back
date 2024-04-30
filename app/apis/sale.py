@@ -1,56 +1,56 @@
 from app.models.sale import sale_model
 from flask_restx import Namespace, Resource
-from app.services.user_service import get_all_users, get_user, create_user, update_user, delete_user
+from app.services.sale_service import get_all_sales, get_sale, create_sale, update_sale, delete_sale
 
-api = Namespace('Sales', description='Users related operations')
+api = Namespace('Sales', description='Sales related operations')
 
-user = api.model('Sales', sale_model)
+sale = api.model('Sales', sale_model)
 
 @api.route('/')
-class UserList(Resource):
-    @api.doc('list_users')
-    @api.marshal_list_with(user)
+class SaleList(Resource):
+    @api.doc('list_sales')
+    @api.marshal_list_with(sale)
     def get(self):
-        '''List all users'''
-        users = get_all_users()
-        return users
+        '''List all sales'''
+        sales = get_all_sales()
+        return sales
 
-    @api.doc('create_user')
-    @api.expect(user)
-    @api.marshal_with(user, code=201)
+    @api.doc('create_sale')
+    @api.expect(sale)
+    @api.marshal_with(sale, code=201)
     def post(self):
-        '''Create a new user'''
-        new_user = create_user(api.payload)
-        return new_user, 201
+        '''Create a new sale'''
+        new_sale = create_sale(api.payload)
+        return new_sale, 201
 
 @api.route('/<int:id>')
-@api.param('id', 'The user identifier')
-@api.response(404, 'User not found')
-class User(Resource):
-    @api.doc('get_user')
-    @api.marshal_with(user)
+@api.param('id', 'The sale identifier')
+@api.response(404, 'sale not found')
+class Sale(Resource):
+    @api.doc('get_sale')
+    @api.marshal_with(sale)
     def get(self, id):
-        '''Fetch a user given its identifier'''
-        user = get_user(id)
-        if user:
-            return user
+        '''Fetch a sale given its identifier'''
+        sale = get_sale(id)
+        if sale:
+            return sale
         else:
-            api.abort(404, "User not found")
+            api.abort(404, "sale not found")
 
-    @api.doc('update_user')
-    @api.expect(user)
-    @api.marshal_with(user)
+    @api.doc('update_sale')
+    @api.expect(sale)
+    @api.marshal_with(sale)
     def put(self, id):
-        '''Update a user given its identifier'''
-        updated_user = update_user(id, api.payload)
-        if updated_user:
-            return updated_user
+        '''Update a sale given its identifier'''
+        updated_sale = update_sale(id, api.payload)
+        if updated_sale:
+            return updated_sale
         else:
-            api.abort(404, "User not found")
+            api.abort(404, "sale not found")
 
-    @api.doc('delete_user')
-    @api.response(204, 'User deleted')
+    @api.doc('delete_sale')
+    @api.response(204, 'sale deleted')
     def delete(self, id):
-        '''Delete a user given its identifier'''
-        delete_user(id)
+        '''Delete a sale given its identifier'''
+        delete_sale(id)
         return '', 204

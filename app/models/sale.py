@@ -1,5 +1,5 @@
 from flask_restx import fields
-from app.apis.material import user as material
+from app.apis.material import material
 from app.apis.user import user
 sale_model = {
     'id': fields.String(description='ID del usuario'),
